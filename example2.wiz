@@ -1,0 +1,2 @@
+Q: Are you hungry? [yes/no] => HUNGRY|FULL
+Q: Are you feeling tired? [yes/no] => TIRED|AWAKE

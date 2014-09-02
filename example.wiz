@@ -1,0 +1,8 @@
+Q: Are you hungry? [yes/no] => HUNGRY|FULL
+Q: Are you feeling tired? [yes/no] => TIRED|AWAKE
+Q: Do you have lollies? [yes/no] => HAVE_LOLLIES|NO_LOLLIES
+Q: How many Devs do you have? [<10/<20/>=20] => SMALL_TEAM|MID_TEAM|BIG_TEAM
+{FULL} Don't eat anything!
+{HUNGRY & TIRED & HAVE_LOLLIES} Eat Lollies!
+{HUNGRY & TIRED & NO_LOLLIES} Eat Biscuites!
+{HUNGRY & AWAKE} Get a cup of tea!
