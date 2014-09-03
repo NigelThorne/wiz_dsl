@@ -48,14 +48,14 @@ class QADSLParser < Parslet::Parser
 end
 
 class MyTransform < Parslet::Transform
-  rule(state: simple(:name)){ builder.state(name) }
-  rule(option: simple(:name)){ builder.option(name) }
+  rule(state: simple(:name))  { builder.state(name) }
+  rule(option: simple(:name)) { builder.option(name) }
   rule(
     question_text: simple(:text),
     options: sequence(:options),
     states: sequence(:states)
-  ){ builder.question(text, options, states) }
-  rule(question: simple(:questions)){ questions }
+  ) { builder.question(text, options, states) }
+  rule(question: simple(:questions)) { questions }
   rule(conditions: simple(:condition), result: simple(:result)){ 
       builder.rule([condition], result) 
   }
@@ -90,6 +90,20 @@ class Rule
   end  
 end
 
+class Wizard
+    def initialize(questions, rules)
+        @questions, @rules = questions, rules
+    end
+    
+    def run
+        unasked = @questions.dup
+        rules = @rules.dup
+        # find possible outcomes
+        # find question that splits outcomes
+        # keep asking questions until an outcome is found        
+    end
+end
+
 class Builder
   def initialize
     @states = {}
@@ -109,13 +123,17 @@ class Builder
   def question(text, options, states)
     x = Question.new(text, options, states)
     @questions << x
-    x
+    nil
   end
   
   def rule(conditions, state)
     x = Rule.new(conditions, state)
     @rules << x
-    x
+    nil
+  end
+  
+  def wizard()
+    Wizard.new(@questions, @rules)
   end
 end
 
@@ -128,9 +146,12 @@ if __FILE__==$0
   parser = QADSLParser.new
   trans = MyTransform.new
   begin
+    builder = Builder.new
+    pp trans.apply(parser.parse(file), builder: builder )
     puts "=============="
-    pp trans.apply(parser.parse(file), builder: Builder.new )
+    pp wiz = builder.wizard
     puts "=============="
+    wiz.run
   rescue Parslet::ParseFailed => error
     puts error.cause.ascii_tree
   end
