@@ -98,9 +98,9 @@ class Wizard
     def run
         unasked = @questions.dup
         rules = @rules.dup
-        # find possible outcomes
-        # find question that splits outcomes
-        # keep asking questions until an outcome is found        
+        # keep asking questions until an outcome is found
+        
+        # TODO: choose the questions better
     end
 end
 
